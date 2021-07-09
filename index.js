@@ -1,6 +1,6 @@
 
 // como buscar los  video mas nuevos de un chanel  sin usar google api 
-// npm i request-promise  fs 
+// npm i request-promise  fs url
 const url2 = require("url")
 const url = 'https://www.youtube.com/user/lveministerio/videos'
 
