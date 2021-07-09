@@ -40,20 +40,16 @@ function work(stuff) {
 
 
 var i =0; 
-//console.log(htmlHeadstuff)
+
 savetofiledata = htmlHeadstuff 
 while(i < stuff.length)
 
 {
-
-//console.log("Searching for id : " + stuff[i] + "\n")
-
 var stuff2 = stuff[i].split(",")
 
 var nextstep = stuff2[0].replace("}" , "")
 var nextstep2 = nextstep.replace(/(^"|"$)/g, '')
-var nextStep3 = nextstep2.replace(
-  "://","")
+var nextStep3 = nextstep2.replace("://","")
 
 
 var moreSteps = nextStep3.split("?")
@@ -65,13 +61,11 @@ if(moreSteps[0].indexOf(".jpg") >-1)
 {
 
 // ahacer  un elemento para  usar la imagen   
-
 if(listadeIds.indexOf(moreSteps[0]) < 0){
 listadeIds.push(moreSteps[0])
 var Id = showID('https://' + moreSteps[0])
 savetofiledata= savetofiledata+ "<a href= 'https://www.youtube.com/watch?v="+Id +"'><img src='https://" +moreSteps[0]  + "'/></a>";
 
-//console.log("<img src='https://" +moreSteps[0]  + "'/><br>")
 
 }
 
@@ -84,7 +78,7 @@ savetofiledata= savetofiledata+ "<a href= 'https://www.youtube.com/watch?v="+Id 
 
 }
 savetofiledata = savetofiledata + endofhtml 
-//console.log(endofhtml)
+
 saveToFile(savetofiledata)
 }
 function saveToFile(data2,savetofile){
