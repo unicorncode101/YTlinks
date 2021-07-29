@@ -1,9 +1,12 @@
+// Email: linuxnerd123@gmail.com 
+// Younow:TheOtherGuy-El-otro
 
-// como buscar los  video mas nuevos de un chanel  sin usar google api 
-// npm i request-promise  fs 
+
+// como buscar los  video mas nuevos de un channal  sin usar google api 
+//  npm i request-promise  fs 
 const url2 = require("url")
-//const url = 'https://www.youtube.com/user/lveministerio/videos'
-//const urldos = 'https://www.youtube.com/channel/UCW7_-hDd-eXpR06glUY_aPA/videos'
+const url = process.argv[2] 
+
 const rp = require('request-promise');
 var output;
 var finalTitle = [];
@@ -51,12 +54,6 @@ output2= html
 var foundit = output2.indexOf("videoPrimaryInfoRenderer")
 var ends= foundit+ 5000;
 var subpart = output2.substr(foundit,ends)
-/*
-var cutups= subpart.split('title')
-var parts2 = cutups[1].split(":")
-var titles= parts2[3].split("}")
-var titleOnly = titles[0];
-*/
 var cutups= subpart.split('}')
 var messyViews = cutups[2].split(":")
 var messytitle = cutups[0].split(":")
