@@ -2,13 +2,16 @@
 // como buscar los  video mas nuevos de un chanel  sin usar google api 
 // npm i request-promise  fs 
 const url2 = require("url")
-const url = 'https://www.youtube.com/user/lveministerio/videos'
-
+//const url = 'https://www.youtube.com/user/lveministerio/videos'
+//const urldos = 'https://www.youtube.com/channel/UCW7_-hDd-eXpR06glUY_aPA/videos'
 const rp = require('request-promise');
 var output;
-
+var finalTitle = [];
+var jsonStuff=[];
 var savetofiledata =""
 var listadeIds = [];
+
+
 var fullurl = (url2.parse(url).pathname).split('/')
 //console.log(fullurl[2])
 var channelName= fullurl[2]
@@ -33,8 +36,44 @@ work(part3)
 
   })
   .catch(function(err){
+//    handle error
+  });
+
+
+function infoVideo(url3,thumail){
+var output2;
+
+
+rp(url3)
+  .then(function(html){
+output2= html
+// buscar la parte importante en el code html y  javascript 
+var foundit = output2.indexOf("videoPrimaryInfoRenderer")
+var ends= foundit+ 5000;
+var subpart = output2.substr(foundit,ends)
+/*
+var cutups= subpart.split('title')
+var parts2 = cutups[1].split(":")
+var titles= parts2[3].split("}")
+var titleOnly = titles[0];
+*/
+var cutups= subpart.split('}')
+var messyViews = cutups[2].split(":")
+var messytitle = cutups[0].split(":")
+var titleOnly = messytitle[4]
+var cleanViews = messyViews[4]
+var jsData = "{'title':'" +titleOnly + "','views':" +cleanViews + "',:'thumail':'"+thumail+";};";
+
+console.log(JSON.stringify(jsData))
+
+  })
+  .catch(function(err){
+    console.log(err)
     //handle error
   });
+
+
+}
 
 
 
@@ -69,23 +108,30 @@ if(moreSteps[0].indexOf(".jpg") >-1)
 if(listadeIds.indexOf(moreSteps[0]) < 0){
 listadeIds.push(moreSteps[0])
 var Id = showID('https://' + moreSteps[0])
-savetofiledata= savetofiledata+ "<a href= 'https://www.youtube.com/watch?v="+Id +"'><img src='https://" +moreSteps[0]  + "'/></a>";
+ //var titleS= ;
+  infoVideo("https://www.youtube.com/watch?v=" + Id ,"https://"+moreSteps[0]);
+//console.log(test)
+savetofiledata= savetofiledata+ " <a href= 'https://www.youtube.com/watch?v="+Id +"'><img src='https://" +moreSteps[0]  + "'/></a>"+"\r\n" ;
 
-//console.log("<img src='https://" +moreSteps[0]  + "'/><br>")
 
+
+
+
+//console.log(finalTitle)
 }
 
 }
 
 }
+//console.log(finalTitle)
 
-
-	i++;
+  i++;
 
 }
 savetofiledata = savetofiledata + "</div>" +endofhtml 
 //console.log(endofhtml)
 saveToFile(savetofiledata)
+//console.log(finalTitle)
 }
 function saveToFile(data2,savetofile){
 const fs = require('fs')
@@ -105,6 +151,7 @@ try {
 } catch (err) {
   console.error(err)
 }
+console.log(jsonStuff);
 
 }
 
@@ -116,3 +163,28 @@ var parts = stuff2.split('/')
 //console.log(parts[2])
 return parts[2]
 }
+function saveJson(jdata){
+// title, link , thumname; 
+	
+	
+	
+}
+
+
+
+class ytInfo {
+  
+  constructor(title,links, thumnail) {
+    this.ytTitle = title;
+    this.ytLinks = links;
+	this.ytThum=thumnail
+  }
+  // Getter
+  getInfo() {
+    return ytTitle +" : " + ytLinks + " :" + ytThum
+	
+  }
+  // Method
+  
+}
+
